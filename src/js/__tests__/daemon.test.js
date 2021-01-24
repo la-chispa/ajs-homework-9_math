@@ -1,42 +1,41 @@
 import Daemon from '../daemon';
 
-test('attack 1st cell from character, without stone', () => {
-  const daemon = new Daemon('Dormamu');
-  daemon.attack = 100;
-  expect(daemon.attackEnemy(1)).toBe(100);
+test('attack 2nd cell, without stone', () => {
+  const dormamu = new Daemon('Dormamu');
+  dormamu.attack = 100;
+  dormamu.distance = 2;
+  dormamu.stoned = false;
+  expect(dormamu.attack).toBe(90);
 });
 
-test('attack 1st cell from character, with stone', () => {
-  const daemon = new Daemon('Dormamu');
-  daemon.attack = 100;
-  daemon.stoned = true;
-  expect(daemon.attackEnemy(1)).toBe(100);
+test('attack 1st cell, without stone', () => {
+  const dormamu = new Daemon('Dormamu');
+  dormamu.attack = 100;
+  dormamu.distance = 1;
+  dormamu.stoned = false;
+  expect(dormamu.attack).toBe(100);
 });
 
-test('attack 2nd cell from character, without stone', () => {
-  const daemon = new Daemon('Dormamu');
-  daemon.attack = 100;
-  expect(daemon.attackEnemy(2)).toBe(90);
+test('attack 1st cell, with stone', () => {
+  const dormamu = new Daemon('Dormamu');
+  dormamu.attack = 100;
+  dormamu.distance = 1;
+  dormamu.stoned = true;
+  expect(dormamu.attack).toBe(100);
 });
 
-test('attack 2nd cell from character, with stone', () => {
-  const daemon = new Daemon('Dormamu');
-  daemon.attack = 100;
-  daemon.stoned = true;
-  expect(daemon.attackEnemy(2)).toBe(85);
+test('attack 2nd cell, with stone', () => {
+  const dormamu = new Daemon('dormamu');
+  dormamu.attack = 100;
+  dormamu.distance = 2;
+  dormamu.stoned = true;
+  expect(dormamu.attack).toBe(85);
 });
 
 test('attack with stone < 0', () => {
-  const daemon = new Daemon('Dormamu');
-  daemon.attack = 10;
-  daemon.stoned = true;
-  expect(daemon.attackEnemy(4)).toBe(0);
-});
-
-test('wrong value of cell to attack', () => {
-  const daemon = new Daemon('Dormamu');
-  function wrongCell() {
-    daemon.attackEnemy(10);
-  }
-  expect(wrongCell).toThrowError(new Error('Strange attack'));
+  const dormamu = new Daemon('dormamu');
+  dormamu.attack = 10;
+  dormamu.distance = 4;
+  dormamu.stoned = true;
+  expect(dormamu.attack).toBe(0);
 });

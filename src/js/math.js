@@ -1,23 +1,26 @@
 import Character from './app';
 
 export default class Calculation extends Character {
-  constructor(name, type) {
-    super(name, type);
-    this.attackRatios = new Map([[1, 1], [2, 0.9], [3, 0.8], [4, 0.7], [5, 0.6]]);
+  get stoned() {
+    return this._stoned;
   }
 
-  attackEnemy(cell) {
-    if (this.attackRatios.has(cell)) {
-      this.attack *= this.attackRatios.get(cell);
-    } else {
-      throw new Error('Strange attack');
-    }
+  set stoned(value) {
+    this._stoned = value;
+  }
+
+  get attack() {
+    let attack = this._attack - ((this.distance - 1) * 10);
     if (this.stoned) {
-      this.attack -= Math.log2(cell) * 5;
+      attack -= Math.log2(this.distance) * 5;
     }
-    if (this.attack < 0) {
-      this.attack = 0;
+    if (attack < 0) {
+      attack = 0;
     }
-    return this.attack;
+    return attack;
+  }
+
+  set attack(value) {
+    this._attack = value;
   }
 }
